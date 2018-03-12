@@ -1,0 +1,8 @@
+@CustomFields = (
+    {
+        Name        => 'User',
+        Type        => 'FreeformMultiple',
+        LookupType  => 'RT::User',
+        Description => 'Users to switch',
+    },
+);

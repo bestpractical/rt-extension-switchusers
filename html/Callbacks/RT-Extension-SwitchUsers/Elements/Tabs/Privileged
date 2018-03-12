@@ -1,0 +1,19 @@
+<%INIT>
+my @users = RT::Extension::SwitchUsers->GetUsersToSwitch();
+return unless @users;
+
+my $switch_users = Menu->child( 'tools' )->child(
+    switch_users => title => loc( 'Switch Users' ),
+    description  => loc( 'Switch current user to another' ),
+    path         => '/Tools/SwitchUsers.html',
+);
+
+for my $user ( @users ) {
+    next if $user->id == $session{CurrentUser}->id;
+    $switch_users->child(
+        ( "switch_user_" . $user->Name ) => title => loc( 'Switch to [_1]', $user->Name )
+          . ( $user->id == $users[ 0 ]->id ? ' (' . loc( 'Base User' ) . ')' : '' ),
+        path => '/Tools/SwitchUsers.html?SwitchUser=' . $user->id
+    );
+}
+</%INIT>

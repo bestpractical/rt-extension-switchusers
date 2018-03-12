@@ -1,0 +1,55 @@
+<& /Elements/Header, Title => $title &>
+<& /Elements/Tabs &>
+
+<& /Elements/ListActions, actions => \@results &>
+
+<form name="SwitchUsers" method="POST" action="<% RT->Config->Get('WebPath') %>/Tools/SwitchUsers.html">
+    <select name="SwitchUser">
+% for my $user ( @users )  {
+        <option <% $user->id == $session{'CurrentUser'}->id ? q{selected="selected"} : '' |n %> value="<% $user->id %>">
+            <% $user->Name %>
+% if ( $user->id == $users[0]->id ) {
+            (<% loc('Base User') %>)
+% }
+
+% if ( $user->id == $session{'CurrentUser'}->id ) {
+            (<% loc('Current User') %>)
+% }
+        </option>
+% }
+    </select>
+    <& /Elements/Submit, Label => loc("Switch")&>
+</form>
+
+<%INIT>
+my $title = loc( 'Switch Users' );
+my @results;
+
+my @users = RT::Extension::SwitchUsers->GetUsersToSwitch();
+Abort( loc("Permission Denied") ) unless @users;
+
+if ( $SwitchUser ) {
+    if ( $SwitchUser =~ /^\d+$/ && grep { $SwitchUser == $_->id } @users ) {
+        if ( $SwitchUser == $session{CurrentUser}->id ) {
+            push @results, loc( "Current user is already '[_1]'", $session{CurrentUser}->Name );
+        }
+        else {
+            RT::Interface::Web::InstantiateNewSession();
+            $session{CurrentUser} = RT::CurrentUser->new;
+            $session{CurrentUser}->Load( $SwitchUser );
+            # $users[0] is always the base user.
+            $session{'SwitchUsers-BaseUser'} = $users[ 0 ]->id unless $session{CurrentUser}->id == $users[ 0 ]->id;
+            push @results, loc( "Switched to user '[_1]'", $session{CurrentUser}->Name );
+        }
+    }
+    else {
+        push @results, loc( "Invalid SwitchUser" );
+    }
+    MaybeRedirectForResults( Actions => \@results );
+}
+
+</%INIT>
+
+<%ARGS>
+$SwitchUser => undef
+</%ARGS>
