@@ -1,6 +1,6 @@
 @CustomFields = (
     {
-        Name        => 'User',
+        Name        => 'Switch Users Accounts',
         Type        => 'FreeformMultiple',
         LookupType  => 'RT::User',
         Description => 'Users to switch',

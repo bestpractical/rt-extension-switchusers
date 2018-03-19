@@ -67,7 +67,7 @@ sub GetUsersToSwitch {
 
     my @users = $base_user;
 
-    my $ocfvs = $base_user->CustomFieldValues( 'User' );
+    my $ocfvs = $base_user->CustomFieldValues( 'Switch Users Accounts' );
     while ( my $ocfv = $ocfvs->Next ) {
         my $user = RT::User->new( RT->SystemUser );
         $user->Load( $ocfv->Content );
