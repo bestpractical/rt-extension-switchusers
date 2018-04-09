@@ -16,7 +16,9 @@ if ( my @fields = grep { $_ } RT->Config->Get( 'SwitchUsersSharedFields' ) ) {
         my $field        = shift;
         my $base_user_id = $HTML::Mason::Commands::session{'SwitchUsers-BaseUser'};
         if (   $base_user_id
+            && $self->id
             && $base_user_id != $self->id
+            && $HTML::Mason::Commands::session{CurrentUser}
             && $self->id == $HTML::Mason::Commands::session{CurrentUser}->id
             && grep { $field eq $_ } @fields )
         {
