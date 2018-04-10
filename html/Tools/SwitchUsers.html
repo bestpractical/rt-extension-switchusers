@@ -34,9 +34,12 @@ if ( $SwitchUser ) {
             push @results, loc( "Current user is already '[_1]'", $session{CurrentUser}->Name );
         }
         else {
+            my $external_authed = $session{WebExternallyAuthed};
             RT::Interface::Web::InstantiateNewSession();
             $session{CurrentUser} = RT::CurrentUser->new;
             $session{CurrentUser}->Load( $SwitchUser );
+            $session{WebExternallyAuthed} ||= $external_authed;
+
             # $users[0] is always the base user.
             $session{'SwitchUsers-BaseUser'} = $users[ 0 ]->id unless $session{CurrentUser}->id == $users[ 0 ]->id;
             push @results, loc( "Switched to user '[_1]'", $session{CurrentUser}->Name );

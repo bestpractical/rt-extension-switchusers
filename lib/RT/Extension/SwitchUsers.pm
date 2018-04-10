@@ -36,6 +36,16 @@ if ( my @fields = grep { $_ } RT->Config->Get( 'SwitchUsersSharedFields' ) ) {
     };
 }
 
+{
+    use RT::Interface::Web;
+    no warnings 'redefine';
+    my $orig = \&RT::Interface::Web::AttemptExternalAuth;
+    *RT::Interface::Web::AttemptExternalAuth = sub {
+        return if $HTML::Mason::Commands::session{'SwitchUsers-BaseUser'};
+        return $orig->(@_);
+    };
+}
+
 sub GetUsersToSwitch {
     my $self = shift;
     my $base_user_id =
