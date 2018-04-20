@@ -3,7 +3,7 @@ use warnings;
 
 package RT::Extension::SwitchUsers;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 use RT::User;
 

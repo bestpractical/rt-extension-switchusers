@@ -1,5 +1,11 @@
 Revision history for RT-Extension-SwitchUsers
 
+0.03 2018-04-20
+ - Show the switch menu using rights for the base user, not the switched user.
+   This means the menu will be there for switching back, even if the switched
+   user doesn't normally see it.
+ - Work around REMOTE_USER and $WebRemoteUserContinuous when switched
+
 0.02 2018-04-09
  - Fix bug trying to call loc before user object is available.
 
