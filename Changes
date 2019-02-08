@@ -1,5 +1,8 @@
 Revision history for RT-Extension-SwitchUsers
 
+0.04 2019-02-08
+ - Move Switch Users menu item to preferences menu
+
 0.03 2018-04-20
  - Show the switch menu using rights for the base user, not the switched user.
    This means the menu will be there for switching back, even if the switched
