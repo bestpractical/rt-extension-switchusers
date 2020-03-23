@@ -6,6 +6,8 @@ package RT::Extension::SwitchUsers;
 our $VERSION = '0.04';
 
 use RT::User;
+use RT::SwitchedUserRealActor;
+use RT::SwitchedUserRealActors;
 
 if ( my @fields = grep { $_ } RT->Config->Get( 'SwitchUsersSharedFields' ) ) {
 
@@ -92,6 +94,74 @@ sub GetUsersToSwitch {
     }
 
     return @users;
+}
+
+{
+    use RT::Record;
+    no warnings 'redefine';
+    my $orig_create = \&RT::Record::Create;
+    *RT::Record::Create = sub {
+        my $self = shift;
+        my ( $id, $msg ) = $orig_create->( $self, @_ );
+
+        if (   $id
+            && $HTML::Mason::Commands::session{'SwitchUsers-BaseUser'}
+            && !$self->isa('RT::SwitchedUserRealActor')
+            && $self->_Accessible( 'Creator', 'read' ) )
+        {
+            my $record = RT::SwitchedUserRealActor->new( $self->CurrentUser );
+            my ( $ret, $msg ) = $record->Create(
+                ObjectType    => ref $self,
+                ObjectId      => $id,
+                Creator       => $HTML::Mason::Commands::session{'SwitchUsers-BaseUser'},
+                LastUpdatedBy => $HTML::Mason::Commands::session{'SwitchUsers-BaseUser'},
+            );
+            if ( !$ret ) {
+                RT->Logger->error( "Couldn't create SwitchedUserRealActor record for " . ref($self) . "#$id: $msg" );
+            }
+        }
+        return wantarray ? ( $id, $msg ) : $id;
+    };
+
+    my $orig_set = \&RT::Record::_Set;
+    *RT::Record::_Set = sub {
+        my $self = shift;
+        my ( $ret, $msg ) = $orig_set->( $self, @_ );
+        if (   $ret
+            && $HTML::Mason::Commands::session{'SwitchUsers-BaseUser'}
+            && !$self->isa('RT::SwitchedUserRealActor')
+            && $self->_Accessible( 'LastUpdatedBy', 'read' ) )
+        {
+            my $record = RT::SwitchedUserRealActor->new( $self->CurrentUser );
+            $record->LoadByCols( ObjectType => ref $self, ObjectId => $self->Id );
+            if ( $record->Id ) {
+                if ( $record->LastUpdatedBy != $HTML::Mason::Commands::session{'SwitchUsers-BaseUser'} ) {
+                    my ( $ret, $msg ) = $record->__Set(
+                        Field => 'LastUpdatedBy',
+                        Value => $HTML::Mason::Commands::session{'SwitchUsers-BaseUser'},
+                    );
+                    if ( !$ret ) {
+                        RT->Logger->error(
+                            "Couldn't update SwitchedUserRealActor for " . ref($self) . "#" . $self->Id . ": $msg" );
+                    }
+                }
+            }
+            else {
+                # Old record that doesn't have related RT::SwitchedUserRealActor yet
+                my ( $ret, $msg ) = $record->Create(
+                    ObjectType    => ref $self,
+                    ObjectId      => $self->Id,
+                    Creator       => $self->Creator,
+                    LastUpdatedBy => $HTML::Mason::Commands::session{'SwitchUsers-BaseUser'},
+                );
+                if ( !$ret ) {
+                    RT->Logger->error(
+                        "Couldn't create SwitchedUserRealActor for " . ref($self) . "#" . $self->Id . ": $msg" );
+                }
+            }
+        }
+        return wantarray ? ( $ret, $msg ) : $ret;
+    };
 }
 
 =head1 NAME
