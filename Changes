@@ -1,5 +1,10 @@
 Revision history for RT-Extension-SwitchUsers
 
+0.05 2020-08-20
+ - Write a log message when switching to/from another user
+ - Create a new table to record the actual user making changes when
+   operating as a switched user
+
 0.04 2019-02-08
  - Move Switch Users menu item to preferences menu
 
