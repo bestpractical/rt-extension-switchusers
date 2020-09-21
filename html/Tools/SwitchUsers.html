@@ -4,9 +4,11 @@
 <& /Elements/ListActions, actions => \@results &>
 
 <form name="SwitchUsers" method="POST" action="<% RT->Config->Get('WebPath') %>/Tools/SwitchUsers.html">
-    <select name="SwitchUser">
+    <div class="form-row">
+      <div class="col-auto">
+        <select name="SwitchUser" class="selectpicker">
 % for my $user ( @users )  {
-        <option <% $user->id == $session{'CurrentUser'}->id ? q{selected="selected"} : '' |n %> value="<% $user->id %>">
+          <option <% $user->id == $session{'CurrentUser'}->id ? q{selected="selected"} : '' |n %> value="<% $user->id %>">
             <% $user->Name %>
 % if ( $user->id == $users[0]->id ) {
             (<% loc('Base User') %>)
@@ -15,10 +17,14 @@
 % if ( $user->id == $session{'CurrentUser'}->id ) {
             (<% loc('Current User') %>)
 % }
-        </option>
+          </option>
 % }
-    </select>
-    <& /Elements/Submit, Label => loc("Switch")&>
+        </select>
+      </div>
+      <div class="col-auto">
+        <& /Elements/Submit, Label => loc("Switch")&>
+      </div>
+    </div>
 </form>
 
 <%INIT>
