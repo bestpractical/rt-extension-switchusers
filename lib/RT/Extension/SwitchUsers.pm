@@ -127,7 +127,7 @@ sub GetUsersToSwitch {
     my $orig_set = \&RT::Record::_Set;
     *RT::Record::_Set = sub {
         my $self = shift;
-        my ( $ret, $msg ) = $orig_set->( $self, @_ );
+        my $ret  = $orig_set->( $self, @_ );
         if (   $ret
             && $HTML::Mason::Commands::session{'SwitchUsers-BaseUser'}
             && !$self->isa('RT::SwitchedUserRealActor')
@@ -162,7 +162,7 @@ sub GetUsersToSwitch {
                 }
             }
         }
-        return wantarray ? ( $ret, $msg ) : $ret;
+        return wantarray ? ( $ret->as_array ) : $ret;
     };
 }
 
