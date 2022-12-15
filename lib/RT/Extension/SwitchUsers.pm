@@ -108,7 +108,7 @@ sub GetUsersToSwitch {
             && $HTML::Mason::Commands::session{'SwitchUsers-BaseUser'}
             && !$self->isa('RT::SwitchedUserRealActor')
             && $self->_Accessible( 'Creator', 'read' )
-            && $self->Creator != RT->SystemUser->Id )
+            && $self->__Value('Creator') != RT->SystemUser->Id )
         {
             my $record = RT::SwitchedUserRealActor->new( $self->CurrentUser );
             my ( $ret, $msg ) = $record->Create(
@@ -132,7 +132,7 @@ sub GetUsersToSwitch {
             && $HTML::Mason::Commands::session{'SwitchUsers-BaseUser'}
             && !$self->isa('RT::SwitchedUserRealActor')
             && $self->_Accessible( 'LastUpdatedBy', 'read' )
-            && $self->LastUpdatedBy != RT->SystemUser->Id )
+            && $self->__Value('LastUpdatedBy') != RT->SystemUser->Id )
         {
             my $record = RT::SwitchedUserRealActor->new( $self->CurrentUser );
             $record->LoadByCols( ObjectType => ref $self, ObjectId => $self->Id );
