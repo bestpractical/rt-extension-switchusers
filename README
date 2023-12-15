@@ -6,7 +6,7 @@ DESCRIPTION
     defined in user custom field "Switch Users Accounts".
 
 RT VERSION
-    Works with RT 4.4 and RT 5
+    Works with RT 5
 
 INSTALLATION
     perl Makefile.PL

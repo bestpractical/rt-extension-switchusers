@@ -177,7 +177,7 @@ defined in user custom field "Switch Users Accounts".
 
 =head1 RT VERSION
 
-Works with RT 4.4 and RT 5
+Works with RT 5
 
 =head1 INSTALLATION
 
