@@ -3,6 +3,9 @@ Revision history for RT-Extension-SwitchUsers
 0.07 2023-12-15
   - Skip ACL on Creator/LastUpdatedBy check in SwitchUsers. Allows additional
     transaction recording to succeed without error when SwitchUsers is utilized.
+  - Fix id schema of SwitchUsers for mysql
+  - Add Pg schema for SwitchUsers
+  - Add SQLite schema for SwitchUsers
 
 0.06 2021-04-05
  - Return Class::ReturnValue object in scalar mode just like original _Set

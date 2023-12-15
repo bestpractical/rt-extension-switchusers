@@ -2,6 +2,8 @@ Changes
 etc/initialdata
 etc/schema.mysql
 etc/schema.Oracle
+etc/schema.Pg
+etc/schema.SQLite
 etc/upgrade/0.05/schema.Oracle
 html/Callbacks/RT-Extension-SwitchUsers/Elements/ShowTransaction/Default
 html/Callbacks/RT-Extension-SwitchUsers/Elements/ShowUser/Modify
