@@ -7,6 +7,8 @@ Revision history for RT-Extension-SwitchUsers
   - Add Pg schema for SwitchUsers
   - Add SQLite schema for SwitchUsers
 
+All versions below were internal releases and thus not published to CPAN.
+
 0.06 2021-04-05
  - Return Class::ReturnValue object in scalar mode just like original _Set
 
