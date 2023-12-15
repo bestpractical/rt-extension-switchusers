@@ -173,11 +173,11 @@ RT-Extension-SwitchUsers - Switch current logged in user to others
 =head1 DESCRIPTION
 
 This extension provides a way to switch current logged in user to others
-defined in user custom field "User".
+defined in user custom field "Switch Users Accounts".
 
 =head1 RT VERSION
 
-Works with RT 4.4
+Works with RT 4.4 and RT 5
 
 =head1 INSTALLATION
 
@@ -201,7 +201,7 @@ in your database.
 If you are upgrading this module, check for upgrading instructions
 in case changes need to be made to your database.
 
-=item Edit your F</opt/rt4/etc/RT_SiteConfig.pm>
+=item Edit your F</opt/rt5/etc/RT_SiteConfig.pm>
 
 Add this line:
 
@@ -220,7 +220,7 @@ switched users.
 
 =item Clear your mason cache
 
-    rm -rf /opt/rt4/var/mason_data/obj
+    rm -rf /opt/rt5/var/mason_data/obj
 
 =item Restart your webserver
 
@@ -245,7 +245,7 @@ href="http://rt.cpan.org/Public/Dist/Display.html?Name=RT-Extension-SwitchUsers"
 
 =head1 LICENSE AND COPYRIGHT
 
-This software is Copyright (c) 2018 by Best Practical Solutions, LLC
+This software is Copyright (c) 2018-2023 by Best Practical Solutions, LLC
 
 This is free software, licensed under:
 

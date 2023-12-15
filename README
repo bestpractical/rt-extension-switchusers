@@ -3,10 +3,10 @@ NAME
 
 DESCRIPTION
     This extension provides a way to switch current logged in user to others
-    defined in user custom field "User".
+    defined in user custom field "Switch Users Accounts".
 
 RT VERSION
-    Works with RT 4.4
+    Works with RT 4.4 and RT 5
 
 INSTALLATION
     perl Makefile.PL
@@ -23,7 +23,7 @@ INSTALLATION
         If you are upgrading this module, check for upgrading instructions
         in case changes need to be made to your database.
 
-    Edit your /opt/rt4/etc/RT_SiteConfig.pm
+    Edit your /opt/rt5/etc/RT_SiteConfig.pm
         Add this line:
 
             Plugin('RT::Extension::SwitchUsers');
@@ -40,7 +40,7 @@ INSTALLATION
         distinguish switched users.
 
     Clear your mason cache
-            rm -rf /opt/rt4/var/mason_data/obj
+            rm -rf /opt/rt5/var/mason_data/obj
 
     Restart your webserver
 
@@ -53,7 +53,8 @@ BUGS
     or via the web at
         http://rt.cpan.org/Public/Dist/Display.html?Name=RT-Extension-SwitchUsers
 LICENSE AND COPYRIGHT
-    This software is Copyright (c) 2018 by Best Practical Solutions, LLC
+    This software is Copyright (c) 2018-2023 by Best Practical Solutions,
+    LLC
 
     This is free software, licensed under:
 
