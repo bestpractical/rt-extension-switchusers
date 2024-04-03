@@ -173,7 +173,9 @@ RT-Extension-SwitchUsers - Switch current logged in user to others
 =head1 DESCRIPTION
 
 This extension provides a way to switch current logged in user to others
-defined in user custom field "Switch Users Accounts".
+defined in user custom field "Switch Users Accounts", which contains a list
+of user names (one name per line) that can be modified on admin user or
+"About me" pages.
 
 =head1 RT VERSION
 
