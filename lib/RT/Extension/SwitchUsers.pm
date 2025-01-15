@@ -3,7 +3,7 @@ use warnings;
 
 package RT::Extension::SwitchUsers;
 
-our $VERSION = '0.07';
+our $VERSION = '0.08';
 
 use RT::User;
 use RT::SwitchedUserRealActor;
@@ -247,7 +247,7 @@ href="http://rt.cpan.org/Public/Dist/Display.html?Name=RT-Extension-SwitchUsers"
 
 =head1 LICENSE AND COPYRIGHT
 
-This software is Copyright (c) 2018-2023 by Best Practical Solutions, LLC
+This software is Copyright (c) 2018-2025 by Best Practical Solutions, LLC
 
 This is free software, licensed under:
 
